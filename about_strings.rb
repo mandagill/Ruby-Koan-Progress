@@ -162,21 +162,28 @@ EOS
   in_ruby_version("1.9") do
     def test_in_ruby_1_9_single_characters_are_represented_by_strings
       #how does this differ from the koan above?
-      assert_equal __, ?a
-      assert_equal __, ?a == 97
+      assert_equal 97, ?a
+      assert_equal true, ?a == 97
     end
   end
 
   def test_strings_can_be_split
     string = "Sausage Egg Cheese"
     words = string.split
-    assert_equal [__, __, __], words
+    assert_equal ["Sausage", "Egg", "Cheese"], words
   end
 
   def test_strings_can_be_split_with_different_patterns
     string = "the:rain:in:spain"
     words = string.split(/:/)
-    assert_equal [__, __, __, __], words
+    assert_equal ["the", "rain", "in", "spain"], words
+    # this works here but not in IRB. output:
+    #>> words = ["now:is:the:time"]
+    #=> ["now:is:the:time"]
+    #>> words = string.split(/:/)
+    #NameError: undefined local variable or method `string' for main:Object
+    	#from (irb):4
+
 
     # NOTE: Patterns are formed from Regular Expressions.  Ruby has a
     # very powerful Regular Expression library.  We will become
@@ -185,14 +192,14 @@ EOS
 
   def test_strings_can_be_joined
     words = ["Now", "is", "the", "time"]
-    assert_equal __, words.join(" ")
+    assert_equal "Now is the time", words.join(" ")
   end
 
   def test_strings_are_unique_objects 
     a = "a string"
     b = "a string"
 
-    assert_equal __, a           == b
-    assert_equal __, a.object_id == b.object_id
+    assert_equal true, a           == b
+    assert_equal false, a.object_id == b.object_id
   end
 end
