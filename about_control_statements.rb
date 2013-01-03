@@ -1,14 +1,14 @@
 require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 class AboutControlStatements < EdgeCase::Koan
-
+#wait so nil would seem to == true here? I'm passing nothing and it returns true...?
   def test_if_then_else_statements
     if true
       result = :true_value
     else
       result = :false_value
     end
-    assert_equal __, result
+    assert_equal :true_value, result
   end
 
   def test_if_then_statements
@@ -16,23 +16,23 @@ class AboutControlStatements < EdgeCase::Koan
     if true
       result = :true_value
     end
-    assert_equal __, result
+    assert_equal :true_value, result
   end
-
+#okay, WTF.
   def test_if_statements_return_values
     value = if true
               :true_value
             else
               :false_value
             end
-    assert_equal __, value
-
+    assert_equal :true_value, value
+#EVEN MORE WTF
     value = if false
               :true_value
             else
               :false_value
             end
-    assert_equal __, value
+    assert_equal :false_value, value
 
     # NOTE: Actually, EVERY statement in Ruby will return a value, not
     # just if statements.
@@ -42,19 +42,19 @@ class AboutControlStatements < EdgeCase::Koan
     value = if false
               :true_value
             end
-    assert_equal __, value
+    assert_equal nil, value
   end
 
   def test_condition_operators
-    assert_equal __, (true ? :true_value : :false_value)
-    assert_equal __, (false ? :true_value : :false_value)
+    assert_equal :true_value, (true ? :true_value : :false_value)
+    assert_equal :false_value, (false ? :true_value : :false_value)
   end
-
+#so it seems that whatever comes first is what evaluates to true absent any context to define truthiness?
   def test_if_statement_modifiers
     result = :default_value
     result = :true_value if true
 
-    assert_equal __, result
+    assert_equal :true_value, result
   end
 
   def test_unless_statement
@@ -62,7 +62,7 @@ class AboutControlStatements < EdgeCase::Koan
     unless false    # same as saying 'if !false', which evaluates as 'if true'
       result = :false_value
     end
-    assert_equal __, result
+    assert_equal :false_value, result
   end
 
   def test_unless_statement_evaluate_true
@@ -70,14 +70,14 @@ class AboutControlStatements < EdgeCase::Koan
     unless true    # same as saying 'if !true', which evaluates as 'if false'
       result = :true_value
     end
-    assert_equal __, result
+    assert_equal :default_value, result
   end
 
   def test_unless_statement_modifier
     result = :default_value
     result = :false_value unless false
 
-    assert_equal __, result
+    assert_equal :false_value, result
   end
 
   def test_while_statement
@@ -87,7 +87,7 @@ class AboutControlStatements < EdgeCase::Koan
       result = result * i
       i += 1
     end
-    assert_equal __, result
+    assert_equal 3628800, result
   end
 
   def test_break_statement
@@ -98,7 +98,7 @@ class AboutControlStatements < EdgeCase::Koan
       result = result * i
       i += 1
     end
-    assert_equal __, result
+    assert_equal 3628800, result
   end
 
   def test_break_statement_returns_values
@@ -108,7 +108,7 @@ class AboutControlStatements < EdgeCase::Koan
       i += 1
     end
 
-    assert_equal __, result
+    assert_equal 2, result
   end
 
   def test_next_statement
